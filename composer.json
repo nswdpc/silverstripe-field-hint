@@ -1,0 +1,35 @@
+{
+    "name": "nswdpc/silverstripe-field-hint",
+    "description": "Allows developers to add usage hints for templates to consider when rendering the field",
+    "type": "silverstripe-vendormodule",
+    "keywords": [
+        "silverstripe",
+        "nsw",
+        "form fields",
+        "fields",
+        "hints"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "James Ellis",
+            "homepage": "https://dpc.nsw.gov.au",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "NSWDPC\\Forms\\": "src/",
+            "NSWDPC\\Forms\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "silverstripe/framework" : "^4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7 | ^7 | ^8 | ^9",
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "codeception/codeception" : "^2.5 | ^3 | ^4",
+        "symbiote/silverstripe-phpstan": "^4"
+    }
+}
