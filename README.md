@@ -27,7 +27,7 @@ FormAction::create(
 
 The value of setHint is a string, it can be any value that a template can interpret.
 
-The second parameter is whether a class should be added as a field `extraClass` based on the hint provided. Configuration provides mapping between hints and class(es).
+The second parameter is whether a class should be added as an `extraClass` on the field based on the hint provided. Configuration provides mapping between hints and class(es).
 
 ```
 <div class="form-action"<% if $FormFieldHint == 'secondary' %> custom-secondary<% end_if %>
@@ -35,9 +35,12 @@ The second parameter is whether a class should be added as a field `extraClass` 
 
 ## Configuration
 
-There is none, unless you want to add the `Hintable` extension to another field.
+There is none, unless:
 
-If you need to add hint->class mapping, add it to our project configuration here:
++ you want to add the `Hintable` extension to another field.
++ you need to add hint->class mapping
+
+### Sample
 
 ```yaml
 ---
