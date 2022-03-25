@@ -15,7 +15,7 @@ class Hintable extends Extension {
      * Add a hint to a form field
      * @param string $hint eg. 'secondary'
      * @param bool $isClass
-     * @return
+     * @return self
      */
     public function setHint(string $hint, bool $isClass = false) : ViewableData {
         if($hint == '') {
@@ -34,12 +34,35 @@ class Hintable extends Extension {
     }
 
     /**
+     * Add a hint icon to a form field, an icon can be a CSS class, font ligature or ...
+     * Your theme template should handle how the icon is used
+     * @param string $hintIcon
+     * @return self
+     */
+    public function setHintIcon(string $hintIcon) : ViewableData {
+        $this->owner->formFieldHintIcon = $hintIcon;
+        return $this->owner;
+    }
+
+    /**
     * Return the hint for use in templates
      * @return string
      */
     public function FormFieldHint() : string {
         if($this->owner->formFieldHint) {
             return $this->owner->formFieldHint;
+        } else {
+            return '';
+        }
+    }
+
+    /**
+    * Return the hint icon for use in templates
+     * @return string
+     */
+    public function FormFieldHintIcon() : string {
+        if($this->owner->formFieldHintIcon) {
+            return $this->owner->formFieldHintIcon;
         } else {
             return '';
         }
