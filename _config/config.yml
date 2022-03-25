@@ -7,5 +7,8 @@ SilverStripe\Forms\FormAction:
 SilverStripe\Forms\CompositeField:
   extensions:
     - 'NSWPDC\Forms\Hintable'
+SilverStripe\Forms\HTMLReadonlyField:
+  extensions:
+    - 'NSWPDC\Forms\Hintable'
 SilverStripe\Forms\FormField:
   hint_class_mapping: []
