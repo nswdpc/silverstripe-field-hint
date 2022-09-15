@@ -32,11 +32,19 @@ use SilverStripe\Forms\FormAction;
 
 //...
 
+
+/**
+ * Add a hint that the action is a 'secondary' button/input
+ */
 FormAction::create(
     'doSecondary',
     _t('some.i18n_key', 'Complete secondary action')
 )->setHint('secondary');
 
+/**
+ * Add a hint, and also add any class mapped to the secondary hint in config
+ * (See Sample project configuration, below)
+ */
 FormAction::create(
     'doSecondary',
     _t('some.i18n_key', 'Complete secondary action')
