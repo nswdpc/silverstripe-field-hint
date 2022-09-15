@@ -2,7 +2,6 @@
 
 namespace NSWDPC\Forms\Tests;
 
-
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Dev\SapphireTest;
@@ -15,12 +14,14 @@ use SilverStripe\View\SSViewer;
  * Unit tests for Hintable extension
  * @author James
  */
-class HintableTest extends SapphireTest {
+class HintableTest extends SapphireTest
+{
 
     /**
      * Set up for tests
      */
-    protected function setUp() : void {
+    protected function setUp() : void
+    {
         parent::setUp();
         SSViewer::set_themes(['$public', '$default']);
         Config::inst()->update(
@@ -35,54 +36,59 @@ class HintableTest extends SapphireTest {
     /**
      * Tear down for tests
      */
-    protected function tearDown() : void {
+    protected function tearDown() : void
+    {
         parent::tearDown();
     }
 
     /**
      * Test FormAction hint match
      */
-    public function testFormActionHintable() {
+    public function testFormActionHintable()
+    {
         $hint = 'test-hint';
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action'
-        )->setHint( $hint, false);
-        $this->assertEquals( $hint, $field->FormFieldHint());
+        )->setHint($hint, false);
+        $this->assertEquals($hint, $field->FormFieldHint());
     }
 
     /**
      * Test CompositeField hint match
      */
-    public function testCompositeFieldHintable() {
+    public function testCompositeFieldHintable()
+    {
         $hint = 'composite-test-hint';
         $field = CompositeField::create()->setHint($hint, false);
-        $this->assertEquals( $hint, $field->FormFieldHint());
+        $this->assertEquals($hint, $field->FormFieldHint());
     }
 
     /**
      * Test HTMLReadonlyField hint match
      */
-    public function testHTMLReadonlyHintable() {
+    public function testHTMLReadonlyHintable()
+    {
         $hint = 'htmlreadonly-test-hint';
         $field = HTMLReadonlyField::create(
             'HTMLReadonlyTestField',
             'Test htmlreadonly field'
         )->setHint($hint, false);
-        $this->assertEquals( $hint, $field->FormFieldHint());
+        $this->assertEquals($hint, $field->FormFieldHint());
     }
 
     /**
      * Test FormAction hint match -with class
      */
-    public function testFormActionClassHintable() {
+    public function testFormActionClassHintable()
+    {
         $hint = 'primary-button';
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action with class mapping'
-        )->setHint( $hint, true);
-        $this->assertEquals( $hint, $field->FormFieldHint());
-        $this->assertTrue( $field->hasExtraClass('btn-primary') );
+        )->setHint($hint, true);
+        $this->assertEquals($hint, $field->FormFieldHint());
+        $this->assertTrue($field->hasExtraClass('btn-primary'));
     }
 
 
@@ -90,15 +96,15 @@ class HintableTest extends SapphireTest {
     /**
      * Test FormAction hint icon
      */
-    public function testFormActionHintIcon() {
+    public function testFormActionHintIcon()
+    {
         $ligature = 'hamburger';
         $hint = 'hungry';
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action with class mapping'
-        )->setHint( $hint )->setHintIcon( $ligature );
-        $this->assertEquals( $hint, $field->FormFieldHint());
-        $this->assertEquals( $ligature, $field->FormFieldHintIcon());
+        )->setHint($hint)->setHintIcon($ligature);
+        $this->assertEquals($hint, $field->FormFieldHint());
+        $this->assertEquals($ligature, $field->FormFieldHintIcon());
     }
-
 }
