@@ -24,7 +24,7 @@ class HintableTest extends SapphireTest
     {
         parent::setUp();
         SSViewer::set_themes(['$public', '$default']);
-        Config::inst()->update(
+        Config::modify()->set(
             FormAction::class,
             'hint_class_mapping',
             [
