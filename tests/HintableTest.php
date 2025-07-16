@@ -52,7 +52,8 @@ class HintableTest extends SapphireTest
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action'
-        )->setHint($hint, false);
+        );
+        $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
     }
 
@@ -62,7 +63,8 @@ class HintableTest extends SapphireTest
     public function testCompositeFieldHintable(): void
     {
         $hint = 'composite-test-hint';
-        $field = CompositeField::create()->setHint($hint, false);
+        $field = CompositeField::create();
+        $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
     }
 
@@ -75,7 +77,8 @@ class HintableTest extends SapphireTest
         $field = HTMLReadonlyField::create(
             'HTMLReadonlyTestField',
             'Test htmlreadonly field'
-        )->setHint($hint, false);
+        );
+        $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
     }
 
@@ -88,7 +91,8 @@ class HintableTest extends SapphireTest
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action with class mapping'
-        )->setHint($hint, true);
+        );
+        $field->setHint($hint, true);
         $this->assertEquals($hint, $field->FormFieldHint());
         $this->assertTrue($field->hasExtraClass('btn-primary'));
     }
@@ -105,7 +109,9 @@ class HintableTest extends SapphireTest
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action with class mapping'
-        )->setHint($hint)->setHintIcon($ligature);
+        );
+        $field->setHint($hint);
+        $field->setHintIcon($ligature);
         $this->assertEquals($hint, $field->FormFieldHint());
         $this->assertEquals($ligature, $field->FormFieldHintIcon());
     }
