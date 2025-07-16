@@ -12,11 +12,10 @@ use SilverStripe\Forms\FormField;
  */
 class Hintable extends Extension
 {
-
     /**
      * Add a hint to a form field
      */
-    public function setHint(string $hint, bool $isClass = false) : FormField
+    public function setHint(string $hint, bool $isClass = false): FormField
     {
         if ($hint === '') {
             throw new \InvalidArgumentException("Cannot supply an empty hint");
@@ -38,7 +37,7 @@ class Hintable extends Extension
      * Add a hint icon to a form field, an icon can be a CSS class, font ligature or ...
      * Your theme template should handle how the icon is used
      */
-    public function setHintIcon(string $hintIcon) : FormField
+    public function setHintIcon(string $hintIcon): FormField
     {
         $formField = $this->getOwner();
         $formField->formFieldHintIcon = $hintIcon;
@@ -48,7 +47,7 @@ class Hintable extends Extension
     /**
      * Return the hint for use in templates
      */
-    public function FormFieldHint() : string
+    public function FormFieldHint(): string
     {
         $formField = $this->getOwner();
         if ($formField->formFieldHint) {
@@ -61,7 +60,7 @@ class Hintable extends Extension
     /**
      * Return the hint icon for use in templates
      */
-    public function FormFieldHintIcon() : string
+    public function FormFieldHintIcon(): string
     {
         $formField = $this->getOwner();
         if ($formField->formFieldHintIcon) {

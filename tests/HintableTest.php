@@ -3,7 +3,6 @@
 namespace NSWDPC\Forms\Tests;
 
 use SilverStripe\Core\Config\Config;
-use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FormAction;
@@ -16,12 +15,11 @@ use SilverStripe\View\SSViewer;
  */
 class HintableTest extends SapphireTest
 {
-
     /**
      * Set up for tests
      */
     #[\Override]
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         SSViewer::set_themes(['$public', '$default']);
@@ -38,7 +36,7 @@ class HintableTest extends SapphireTest
      * Tear down for tests
      */
     #[\Override]
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
