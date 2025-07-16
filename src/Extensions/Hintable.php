@@ -8,6 +8,7 @@ use SilverStripe\Forms\FormField;
 /**
  * Applies hints to {@link Silverstripe\Form\FormField} that have this extension configured
  * @author James
+ * @extends \SilverStripe\Core\Extension<((\SilverStripe\Forms\CompositeField & static) | (\SilverStripe\Forms\FormAction & static) | (\SilverStripe\Forms\HTMLReadonlyField & static))>
  */
 class Hintable extends Extension
 {
@@ -17,19 +18,19 @@ class Hintable extends Extension
      */
     public function setHint(string $hint, bool $isClass = false) : FormField
     {
-        if ($hint == '') {
+        if ($hint === '') {
             throw new \InvalidArgumentException("Cannot supply an empty hint");
         }
+
         $formField = $this->getOwner();
         $formField->formFieldHint = $hint;
         if ($isClass) {
             $mapping = $formField->config()->get('hint_class_mapping');
-            if (!empty($mapping) && is_array($mapping)) {
-                if (!empty($mapping[ $hint ])) {
-                    $formField->addExtraClass(trim(strval($mapping[ $hint ])));
-                }
+            if (!empty($mapping) && is_array($mapping) && !empty($mapping[ $hint ])) {
+                $formField->addExtraClass(trim(strval($mapping[ $hint ])));
             }
         }
+
         return $formField;
     }
 

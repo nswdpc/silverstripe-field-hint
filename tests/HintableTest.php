@@ -20,6 +20,7 @@ class HintableTest extends SapphireTest
     /**
      * Set up for tests
      */
+    #[\Override]
     protected function setUp() : void
     {
         parent::setUp();
@@ -36,6 +37,7 @@ class HintableTest extends SapphireTest
     /**
      * Tear down for tests
      */
+    #[\Override]
     protected function tearDown() : void
     {
         parent::tearDown();
@@ -44,7 +46,7 @@ class HintableTest extends SapphireTest
     /**
      * Test FormAction hint match
      */
-    public function testFormActionHintable()
+    public function testFormActionHintable(): void
     {
         $hint = 'test-hint';
         $field = FormAction::create(
@@ -57,7 +59,7 @@ class HintableTest extends SapphireTest
     /**
      * Test CompositeField hint match
      */
-    public function testCompositeFieldHintable()
+    public function testCompositeFieldHintable(): void
     {
         $hint = 'composite-test-hint';
         $field = CompositeField::create()->setHint($hint, false);
@@ -67,7 +69,7 @@ class HintableTest extends SapphireTest
     /**
      * Test HTMLReadonlyField hint match
      */
-    public function testHTMLReadonlyHintable()
+    public function testHTMLReadonlyHintable(): void
     {
         $hint = 'htmlreadonly-test-hint';
         $field = HTMLReadonlyField::create(
@@ -80,7 +82,7 @@ class HintableTest extends SapphireTest
     /**
      * Test FormAction hint match -with class
      */
-    public function testFormActionClassHintable()
+    public function testFormActionClassHintable(): void
     {
         $hint = 'primary-button';
         $field = FormAction::create(
@@ -96,7 +98,7 @@ class HintableTest extends SapphireTest
     /**
      * Test FormAction hint icon
      */
-    public function testFormActionHintIcon()
+    public function testFormActionHintIcon(): void
     {
         $ligature = 'hamburger';
         $hint = 'hungry';
