@@ -1,6 +1,6 @@
 <?php
 
-namespace NSWDPC\Forms\Tests;
+namespace NSWDPC\FieldHint\Tests;
 
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
