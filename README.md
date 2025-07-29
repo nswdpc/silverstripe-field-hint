@@ -6,7 +6,9 @@ The hints can be used by themes and templates in a project to render the field i
 
 This avoids polluting module PHP code with theme-specific CSS classes.
 
-Instead of this `$field->addExtraClass('btn btn-danger')`, do this `$field->setHint('danger')`.
+Instead of this: `$field->addExtraClass('btn btn-danger')`
+
+...do this `$field->setHint('danger')`.
 
 ## Default fields
 
@@ -20,7 +22,7 @@ No changes are made to the field itself, the extension just exposes some methods
 
 ## Usage
 
-**Important**: In your theme or project, you need to provide a template that is used by the class using the Hintable extension. [Read: template inheritance](https://docs.silverstripe.org/en/4/developer_guides/templates/template_inheritance/).
+**Important**: In your theme or project, you need to provide a template that is used by the class using the Hintable extension. [Read: template inheritance](https://docs.silverstripe.org/en/5/developer_guides/templates/template_inheritance/).
 
 ### Forms
 
@@ -28,44 +30,34 @@ Set field hints on your forms:
 
 ```php
 <?php
-use SilverStripe\Forms\FormAction;
-
-//...
-
-
 /**
  * Add a hint that the action is a 'secondary' button/input
  */
-FormAction::create(
+\SilverStripe\Forms\FormAction::create(
     'doSecondary',
     _t('some.i18n_key', 'Complete secondary action')
 )->setHint('secondary');
 
 /**
- * Add a hint, and also add any class mapped to the secondary hint in config
+ * Add a hint, and also add any class mapped to the 'secondary' hint in config
  * (See Sample project configuration, below)
  */
-FormAction::create(
+\SilverStripe\Forms\FormAction::create(
     'doSecondary',
     _t('some.i18n_key', 'Complete secondary action')
 )->setHint('secondary', true);
 ```
 
-The value of setHint is a string, it can be any value that a template can interpret.
+The first parameter to setHint is a string, it can be any value that a template can interpret.
 
-The second parameter is whether a class should be added as an `extraClass` on the field based on the hint provided. Configuration provides mapping between hints and class(es).
-
-In your FormAction template, you might add this:
-```
-<div class="form-action"<% if $FormFieldHint == 'secondary' %> custom-secondary<% end_if %>
-```
+The second parameter to setHint is a boolean, when true a class mapped to the hint value is added, if available in configuration. See below for an example.
 
 ### Templates
 
 Use the value of `$FormFieldHint` to modify how your theme/project templates render the field.
 
-Here's an example using `HTMLReadonlyField`:
-    
+Here's an example using the `HTMLReadonlyField` holder template and the hints 'callout' and 'alert':
+
 ```html
 <%-- path: themes/my-theme/templates/SilverStripe/Forms/HTMLReadonlyField_holder.ss --%>
 <% if $FormFieldHint == 'callout' %>
@@ -91,13 +83,15 @@ Here's an example using `HTMLReadonlyField`:
 
 ### Icons
 
-Set a field hint icon on a supporting field:
+Set a field hint icon of 'delete' on a supporting field:
 
 ```php
-FormAction::create(
+<?php
+\SilverStripe\Forms\FormAction::create(
     'doSecondary',
     _t('some.i18n_key', 'Complete secondary action')
-)->setHint('secondary', true)->setFieldHintIcon('delete')
+)->setHint('secondary', true)
+->setFieldHintIcon('delete');
 ```
 
 ```html
@@ -119,7 +113,7 @@ FormAction::create(
 There is none, unless:
 
 + you want to add the `Hintable` extension to another field.
-+ you need to add hint->class mapping
++ you need to add hint -> CSS class mapping
 
 ### Sample project configuration
 
@@ -129,24 +123,39 @@ Name: 'app-field-hint'
 After:
   - '#nswdpc-field-hint'
 ---
-# you require TextField to be hintable
+# your project requires TextField to be hintable
 SilverStripe\Forms\TextField:
   extensions:
     - 'NSWPDC\Forms\Hintable'
 # add hint/class mapping
 SilverStripe\Forms\FormField:
   hint_class_mapping:
-    'secondary': 'nsw-button--secondary'
+    # setHint('secondary') will add the CSS class 'nsw-button--secondary' to the FormField
+    danger: 'nsw-button nsw-button--danger'
 ```
 
-Note that classes are added as extra classes, which by default in Silverstripe are added to both the field holder and the field input element. Your templates should take that into account.
+Code:
 
+```php
+<?php
+\SilverStripe\Forms\FormAction::create(
+    'doDangerousAction',
+    _t('some.i18n_key', 'Complete dangerous action')
+)->setHint('danger', true);
+```
+
+HTML
+```html
+<input type="submit" name="action_doDangerousAction" value="Dangerous Action" class="action nsw-button nsw-button--danger" id="some_form_id">
+```
+
+CSS classes are added as extra classes, which by default in Silverstripe are added to both the field holder and the field input element. Your templates should take that into account.
 
 ## Installation
 
 The only supported way of installing this module is via [composer](https://getcomposer.org/download/)
 
-```
+```sh
 composer require nswdpc/silverstripe-field-hint
 ```
 
@@ -162,8 +171,7 @@ See `_config/config.yml`
 
 ## Maintainers
 
-+ [dpcdigital@NSWDPC:~$](https://dpc.nsw.gov.au)
-
++ PD Web Team
 
 ## Bugtracker
 

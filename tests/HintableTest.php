@@ -113,4 +113,23 @@ class HintableTest extends SapphireTest
         $this->assertEquals($hint, $field->FormFieldHint());
         $this->assertEquals($ligature, $field->FormFieldHintIcon());
     }
+
+    public function testSetHintReturnClassMatches(): void
+    {
+        $field = FormAction::create(
+            'doTestSetHintReturnClassMatches',
+            'Test set hint match class'
+        )->setHint('testing');
+        $this->assertInstanceOf(FormAction::class, $field);
+    }
+
+    public function testSetHintReturnInstanceEqual(): void
+    {
+        $field = FormAction::create(
+            'doTestSetHintReturnInstanceEqual',
+            'Test set hint match instance'
+        );
+        $returnField = $field->setHint('testing');
+        $this->assertEquals($field, $returnField);
+    }
 }
