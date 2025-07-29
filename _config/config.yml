@@ -3,12 +3,12 @@ Name: nswdpc-field-hint
 ---
 SilverStripe\Forms\FormAction:
   extensions:
-    - 'NSWPDC\Forms\Hintable'
+    - 'NSWPDC\FieldHint\Extensions\Hintable'
 SilverStripe\Forms\CompositeField:
   extensions:
-    - 'NSWPDC\Forms\Hintable'
+    - 'NSWPDC\FieldHint\Extensions\Hintable'
 SilverStripe\Forms\HTMLReadonlyField:
   extensions:
-    - 'NSWPDC\Forms\Hintable'
+    - 'NSWPDC\FieldHint\Extensions\Hintable'
 SilverStripe\Forms\FormField:
   hint_class_mapping: []
