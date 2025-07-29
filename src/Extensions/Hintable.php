@@ -3,71 +3,68 @@
 namespace NSWPDC\Forms;
 
 use SilverStripe\Core\Extension;
-use Silverstripe\View\ViewableData;
+use SilverStripe\Forms\FormField;
 
 /**
  * Applies hints to {@link Silverstripe\Form\FormField} that have this extension configured
  * @author James
+ * @extends \SilverStripe\Core\Extension<((\SilverStripe\Forms\CompositeField & static) | (\SilverStripe\Forms\FormAction & static) | (\SilverStripe\Forms\HTMLReadonlyField & static))>
  */
 class Hintable extends Extension
 {
-
     /**
      * Add a hint to a form field
-     * @param string $hint eg. 'secondary'
-     * @param bool $isClass
-     * @return self
      */
-    public function setHint(string $hint, bool $isClass = false) : ViewableData
+    public function setHint(string $hint, bool $isClass = false): FormField
     {
-        if ($hint == '') {
-            throw new \Exception("Cannot supply an empty hint");
+        if ($hint === '') {
+            throw new \InvalidArgumentException("Cannot supply an empty hint");
         }
-        $this->owner->formFieldHint = $hint;
+
+        $formField = $this->getOwner();
+        $formField->formFieldHint = $hint;
         if ($isClass) {
-            $mapping = $this->owner->config()->get('hint_class_mapping');
-            if (!empty($mapping) && is_array($mapping)) {
-                if (!empty($mapping[ $hint ])) {
-                    $this->owner->addExtraClass(trim(strval($mapping[ $hint ])));
-                }
+            $mapping = $formField->config()->get('hint_class_mapping');
+            if (!empty($mapping) && is_array($mapping) && !empty($mapping[ $hint ])) {
+                $formField->addExtraClass(trim(strval($mapping[ $hint ])));
             }
         }
-        return $this->owner;
+
+        return $formField;
     }
 
     /**
      * Add a hint icon to a form field, an icon can be a CSS class, font ligature or ...
      * Your theme template should handle how the icon is used
-     * @param string $hintIcon
-     * @return self
      */
-    public function setHintIcon(string $hintIcon) : ViewableData
+    public function setHintIcon(string $hintIcon): FormField
     {
-        $this->owner->formFieldHintIcon = $hintIcon;
-        return $this->owner;
+        $formField = $this->getOwner();
+        $formField->formFieldHintIcon = $hintIcon;
+        return $formField;
     }
 
     /**
-    * Return the hint for use in templates
-     * @return string
+     * Return the hint for use in templates
      */
-    public function FormFieldHint() : string
+    public function FormFieldHint(): string
     {
-        if ($this->owner->formFieldHint) {
-            return $this->owner->formFieldHint;
+        $formField = $this->getOwner();
+        if ($formField->formFieldHint) {
+            return $formField->formFieldHint;
         } else {
             return '';
         }
     }
 
     /**
-    * Return the hint icon for use in templates
-     * @return string
+     * Return the hint icon for use in templates
      */
-    public function FormFieldHintIcon() : string
+    public function FormFieldHintIcon(): string
     {
-        if ($this->owner->formFieldHintIcon) {
-            return $this->owner->formFieldHintIcon;
+        $formField = $this->getOwner();
+        if ($formField->formFieldHintIcon) {
+            return $formField->formFieldHintIcon;
         } else {
             return '';
         }

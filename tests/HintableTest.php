@@ -3,7 +3,6 @@
 namespace NSWDPC\Forms\Tests;
 
 use SilverStripe\Core\Config\Config;
-use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FormAction;
@@ -16,11 +15,11 @@ use SilverStripe\View\SSViewer;
  */
 class HintableTest extends SapphireTest
 {
-
     /**
      * Set up for tests
      */
-    protected function setUp() : void
+    #[\Override]
+    protected function setUp(): void
     {
         parent::setUp();
         SSViewer::set_themes(['$public', '$default']);
@@ -36,7 +35,8 @@ class HintableTest extends SapphireTest
     /**
      * Tear down for tests
      */
-    protected function tearDown() : void
+    #[\Override]
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
@@ -44,49 +44,53 @@ class HintableTest extends SapphireTest
     /**
      * Test FormAction hint match
      */
-    public function testFormActionHintable()
+    public function testFormActionHintable(): void
     {
         $hint = 'test-hint';
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action'
-        )->setHint($hint, false);
+        );
+        $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
     }
 
     /**
      * Test CompositeField hint match
      */
-    public function testCompositeFieldHintable()
+    public function testCompositeFieldHintable(): void
     {
         $hint = 'composite-test-hint';
-        $field = CompositeField::create()->setHint($hint, false);
+        $field = CompositeField::create();
+        $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
     }
 
     /**
      * Test HTMLReadonlyField hint match
      */
-    public function testHTMLReadonlyHintable()
+    public function testHTMLReadonlyHintable(): void
     {
         $hint = 'htmlreadonly-test-hint';
         $field = HTMLReadonlyField::create(
             'HTMLReadonlyTestField',
             'Test htmlreadonly field'
-        )->setHint($hint, false);
+        );
+        $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
     }
 
     /**
      * Test FormAction hint match -with class
      */
-    public function testFormActionClassHintable()
+    public function testFormActionClassHintable(): void
     {
         $hint = 'primary-button';
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action with class mapping'
-        )->setHint($hint, true);
+        );
+        $field->setHint($hint, true);
         $this->assertEquals($hint, $field->FormFieldHint());
         $this->assertTrue($field->hasExtraClass('btn-primary'));
     }
@@ -96,15 +100,36 @@ class HintableTest extends SapphireTest
     /**
      * Test FormAction hint icon
      */
-    public function testFormActionHintIcon()
+    public function testFormActionHintIcon(): void
     {
         $ligature = 'hamburger';
         $hint = 'hungry';
         $field = FormAction::create(
             'doTestFormAction',
             'Test form action with class mapping'
-        )->setHint($hint)->setHintIcon($ligature);
+        );
+        $field->setHint($hint);
+        $field->setHintIcon($ligature);
         $this->assertEquals($hint, $field->FormFieldHint());
         $this->assertEquals($ligature, $field->FormFieldHintIcon());
+    }
+
+    public function testSetHintReturnClassMatches(): void
+    {
+        $field = FormAction::create(
+            'doTestSetHintReturnClassMatches',
+            'Test set hint match class'
+        )->setHint('testing');
+        $this->assertInstanceOf(FormAction::class, $field);
+    }
+
+    public function testSetHintReturnInstanceEqual(): void
+    {
+        $field = FormAction::create(
+            'doTestSetHintReturnInstanceEqual',
+            'Test set hint match instance'
+        );
+        $returnField = $field->setHint('testing');
+        $this->assertEquals($field, $returnField);
     }
 }
