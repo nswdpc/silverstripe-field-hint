@@ -1,6 +1,6 @@
 <?php
 
-namespace NSWPDC\Forms;
+namespace NSWPDC\FieldHint\Extensions;
 
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FormField;
