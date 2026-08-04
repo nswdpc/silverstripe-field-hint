@@ -8,7 +8,22 @@ This avoids polluting module PHP code with theme-specific CSS classes.
 
 Instead of this: `$field->addExtraClass('btn btn-danger')`
 
-...do this `$field->setHint('danger')`.
+...do this `$field->setHint('danger', true)`.
+
+In your project configuration:
+```yml
+---
+Name: 'app-field-hint'
+After:
+  - '#nswdpc-field-hint'
+---
+# add hint/class mapping
+SilverStripe\Forms\FormAction:
+  hint_class_mapping:
+    # setting a hint of 'danger' adds this class
+    # when the second parameter is true
+    danger: 'btn btn-danger'
+```
 
 ## Default fields
 
@@ -20,13 +35,9 @@ Out-of-the-box the following fields are configured to support the `Hintable` ext
 
 No changes are made to the field itself, the extension just exposes some methods on the field to use in module code.
 
-## Usage
+## Form fields
 
-**Important**: In your theme or project, you need to provide a template that is used by the class using the Hintable extension. [Read: template inheritance](https://docs.silverstripe.org/en/5/developer_guides/templates/template_inheritance/).
-
-### Forms
-
-Set field hints on your forms:
+Set field hints on your form fields:
 
 ```php
 <?php
@@ -48,9 +59,9 @@ Set field hints on your forms:
 )->setHint('secondary', true);
 ```
 
-The first parameter to setHint is a string, it can be any value that a template can interpret.
+The first parameter to setHint is a string, it can be any value that a template can use via the `$FormFieldHint` template variable.
 
-The second parameter to setHint is a boolean, when true a class mapped to the hint value is added, if available in configuration. See below for an example.
+The second parameter to setHint is a boolean, when true CSS class(es) mapped to the hint value is added, if available in configuration. See below for an example.
 
 ### Templates
 
@@ -91,20 +102,20 @@ Set a field hint icon of 'delete' on a supporting field:
     'doSecondary',
     _t('some.i18n_key', 'Complete secondary action')
 )->setHint('secondary', true)
-->setFieldHintIcon('delete');
+->setHintIcon('delete');
 ```
 
 ```html
 <%-- theme template: SilverStripe/Forms/FormAction.ss --%>
 <% if $UseButtonTag %>
-    <button $AttributesHTML>
+    <button {$AttributesHTML}>
         <% if $FormFieldHintIcon %>
         <span class="material-icons-outlined">{$FormFieldHintIcon}</span>
         <% end_if %>
-        <% if $ButtonContent %>$ButtonContent<% else %><span>$Title.XML</span><% end_if %>
+        <% if $ButtonContent %>{$ButtonContent}<% else %><span>{$Title}</span><% end_if %>
     </button>
 <% else %>
-	<input $AttributesHTML />
+	<input {$AttributesHTML}>
 <% end_if %>
 ```
 
@@ -127,11 +138,13 @@ After:
 SilverStripe\Forms\TextField:
   extensions:
     - 'NSWPDC\Forms\Hintable'
-# add hint/class mapping
-SilverStripe\Forms\FormField:
+# add hint/class mapping to form actions
+SilverStripe\Forms\FormAction:
   hint_class_mapping:
-    # setHint('secondary') will add the CSS class 'nsw-button--secondary' to the FormField
+    # a hint of danger sets these classes from the NSW Design System
     danger: 'nsw-button nsw-button--danger'
+    # a hint of secondary applies the "Brand Dark Outline Solid" style
+    secondary: 'nsw-button nsw-button--dark-outline-solid'
 ```
 
 Code:
@@ -140,16 +153,25 @@ Code:
 <?php
 \SilverStripe\Forms\FormAction::create(
     'doDangerousAction',
-    _t('some.i18n_key', 'Complete dangerous action')
+    _t('some.dangerous_i18n_key', 'Complete dangerous action')
 )->setHint('danger', true);
+
+\SilverStripe\Forms\FormAction::create(
+    'doSecondaryAction',
+    _t('some.secondary_i18n_key', 'Start something else')
+)->setHint('secondary', true);
 ```
 
-HTML
+HTML rendered in the template:
 ```html
 <input type="submit" name="action_doDangerousAction" value="Dangerous Action" class="action nsw-button nsw-button--danger" id="some_form_id">
 ```
 
 CSS classes are added as extra classes, which by default in Silverstripe are added to both the field holder and the field input element. Your templates should take that into account.
+
+## Templating
+
+Custom themes may need to be updated to support `$FormFieldHint` and `$FormFieldHintIcon`. [Read: template inheritance](https://docs.silverstripe.org/en/6/developer_guides/templates/template_inheritance/).
 
 ## Installation
 
