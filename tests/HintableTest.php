@@ -53,6 +53,7 @@ class HintableTest extends SapphireTest
         );
         $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
+        $this->assertEquals('test-hint', $field->getAttribute('data-hint'));
     }
 
     /**
@@ -64,6 +65,7 @@ class HintableTest extends SapphireTest
         $field = CompositeField::create();
         $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
+        $this->assertEquals('composite-test-hint', $field->getAttribute('data-hint'));
     }
 
     /**
@@ -78,6 +80,7 @@ class HintableTest extends SapphireTest
         );
         $field->setHint($hint, false);
         $this->assertEquals($hint, $field->FormFieldHint());
+        $this->assertEquals('htmlreadonly-test-hint', $field->getAttribute('data-hint'));
     }
 
     /**
@@ -93,6 +96,7 @@ class HintableTest extends SapphireTest
         $field->setHint($hint, true);
         $this->assertEquals($hint, $field->FormFieldHint());
         $this->assertTrue($field->hasExtraClass('btn-primary'));
+        $this->assertEquals('primary-button', $field->getAttribute('data-hint'));
     }
 
 
@@ -112,6 +116,8 @@ class HintableTest extends SapphireTest
         $field->setHintIcon($ligature);
         $this->assertEquals($hint, $field->FormFieldHint());
         $this->assertEquals($ligature, $field->FormFieldHintIcon());
+        $this->assertEquals('hungry', $field->getAttribute('data-hint'));
+        $this->assertEquals($ligature, $field->getAttribute('data-hint-icon'));
     }
 
     public function testSetHintReturnClassMatches(): void
@@ -121,6 +127,7 @@ class HintableTest extends SapphireTest
             'Test set hint match class'
         )->setHint('testing');
         $this->assertInstanceOf(FormAction::class, $field);
+        $this->assertEquals('testing', $field->getAttribute('data-hint'));
     }
 
     public function testSetHintReturnInstanceEqual(): void
@@ -131,5 +138,6 @@ class HintableTest extends SapphireTest
         );
         $returnField = $field->setHint('testing');
         $this->assertEquals($field, $returnField);
+        $this->assertEquals('testing', $field->getAttribute('data-hint'));
     }
 }
