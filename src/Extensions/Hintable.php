@@ -23,6 +23,7 @@ class Hintable extends Extension
 
         $formField = $this->getOwner();
         $formField->formFieldHint = $hint;
+        $formField->setAttribute('data-hint', $hint);
         if ($isClass) {
             $mapping = $formField->config()->get('hint_class_mapping');
             if (!empty($mapping) && is_array($mapping) && !empty($mapping[ $hint ])) {
@@ -41,6 +42,7 @@ class Hintable extends Extension
     {
         $formField = $this->getOwner();
         $formField->formFieldHintIcon = $hintIcon;
+        $formField->setAttribute('data-hint-icon', $hintIcon);
         return $formField;
     }
 

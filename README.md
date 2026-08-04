@@ -43,6 +43,7 @@ Set field hints on your form fields:
 <?php
 /**
  * Add a hint that the action is a 'secondary' button/input
+ * This will set an attribute data-hint with the value 'secondary'
  */
 \SilverStripe\Forms\FormAction::create(
     'doSecondary',
@@ -50,7 +51,7 @@ Set field hints on your form fields:
 )->setHint('secondary');
 
 /**
- * Add a hint, and also add any class mapped to the 'secondary' hint in config
+ * Add a hint as above, and also add any class mapped to the 'secondary' hint in config
  * (See Sample project configuration, below)
  */
 \SilverStripe\Forms\FormAction::create(
@@ -94,7 +95,7 @@ Here's an example using the `HTMLReadonlyField` holder template and the hints 'c
 
 ### Icons
 
-Set a field hint icon of 'delete' on a supporting field:
+Set a field hint icon of 'delete' on a supporting field. This will also set an attribute `data-hint-icon` with the value `delete`.
 
 ```php
 <?php
@@ -137,7 +138,7 @@ After:
 # your project requires TextField to be hintable
 SilverStripe\Forms\TextField:
   extensions:
-    - 'NSWPDC\Forms\Hintable'
+    - 'NSWPDC\FieldHint\Extensions\Hintable'
 # add hint/class mapping to form actions
 SilverStripe\Forms\FormAction:
   hint_class_mapping:
